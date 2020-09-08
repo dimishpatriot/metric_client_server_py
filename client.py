@@ -26,13 +26,13 @@ class Client:
         if not self._get_response_is_valid(r):
             raise ClientError("Incorrect GET response")
         else:
-            r = r.rstrip(self.EOT).split('\n')
+            r = r.rstrip().splitlines()
 
             if len(r) == 1 and r[0] == "ok":
                 return dict()  # if data absent on the server, return empty dict
             else:
                 params = r[1:]
-                params = (tuple(x.split(' ')) for x in params)
+                params = (tuple(x.split()) for x in params)
                 # sort values by timestamp
                 params = sorted(params, key=lambda item: item[2])
                 return self._fill_dictionary(params)
@@ -78,7 +78,7 @@ class Client:
         if response == f"error\nwrong command{cls.EOT}":  # if incorrect request
             return False
         if response.startswith("ok\n"):
-            data_list = response.lstrip("ok\n").rstrip(f"{cls.EOT}").split('\n')
+            data_list = response.lstrip("ok\n").rstrip().splitlines()
             for data in data_list:
                 if not re.fullmatch(r"\S{1,} \d{1,}(.\d{1,})? \d{1,}", data):
                     return False

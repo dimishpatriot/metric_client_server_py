@@ -6,7 +6,7 @@ import socket
 
 sock = socket.socket()
 sock.bind(('127.0.0.1', 8888))
-sock.listen(1)
+sock.listen()
 conn, addr = sock.accept()
 print("=== Debug server is start ===\n")
 
@@ -19,8 +19,8 @@ while True:
         break
 
     r = data.decode('utf-8')
-    method = r.split(' ')[0]
-    payload = r.split(' ')[1].rstrip('\n')
+    method = r.split()[0]
+    payload = r.split()[1].rstrip()
     ok = "ok\n\n"
     print(f">>> {method} request: {data}")
 
@@ -28,24 +28,30 @@ while True:
         if payload == "*":
             response = "ok\nall.cpu 123.1 125\neradrum.memory 0 126\nall.cpu 222.2 124\n\n"
 
+        # TEST BAD RESPONSE ====================================================
         elif payload == "error":
             response = "error\nwrong command\n\n"
+
         elif payload == "error_resp_1":
             response = "ok\n123 abc 123\n\n"
+
         elif payload == "error_resp_2":
             response = "ok\npalm.cpu abc 123\n\n"
+
         elif payload == "error_resp_3":
             response = "ok\npalm.cpu abc abc\n\n"
+
         elif payload == "error_resp_4":
             response = "ok\npalm.cpu 123.1 00000000\npalm.cpu a 000001\n\n"
+
         elif payload == "error_resp_5":
             response = "ok\npalm.cpu 123.1 00000000\npalm.cpu 0 0000.01\n\n"
+
         elif payload == "error_resp_6":
             response = "ko\npalm.cpu 123.1 00000000\npalm.cpu 0 0000.01\n\n"
-
+        # ======================================================================
         else:
-            need_server = payload.split('.')[0]
-            need_param = payload.split('.')[1]
+            need_server, need_param = payload.split('.')
             if need_server in servers and need_param in metrtics:
                 response = f"ok\n{need_server}.{need_param} 666 999\n\n"
             else:
