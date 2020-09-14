@@ -14,7 +14,7 @@ class Client:
         self.sock = socket.socket()
         self.timeout = timeout  # for future
         try:
-            self.sock.connect((ip, port))  # need tuple
+            self.sock.connect((ip, port))
         except socket.error as e:
             raise ClientError("Can't connect to the server. Socket error", e)
 

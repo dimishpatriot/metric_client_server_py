@@ -1,4 +1,4 @@
-# test.py
+# test_client.py
 # coursera week 5 (https://www.coursera.org/learn/diving-in-python)
 # dimishpatriot@github.com
 
@@ -17,10 +17,12 @@ def client():
     return Client("127.0.0.1", 8888)
 
 
+@pytest.mark.connection
 def test_make_server(server):
     assert server
 
 
+@pytest.mark.connection
 def test_make_client(client):
     assert client
 
