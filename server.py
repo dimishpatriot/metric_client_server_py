@@ -23,6 +23,7 @@ class Server:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((self.host, self.port))
             s.setblocking(False)
+            print(f"\n=== Server on the port {self.port} starts! ===")
             s.listen(5)
             sel = selectors.DefaultSelector()
             sel.register(s, selectors.EVENT_READ)

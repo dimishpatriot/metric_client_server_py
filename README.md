@@ -11,34 +11,38 @@ Client and server programs have been successfully tested and delivered 100/100.
 ## Requirements
 - python version > 3.6 (https://www.python.org/downloads/)
 - pytest (https://docs.pytest.org/en/stable/getting-started.html)
+- pytest-html (https://pypi.org/project/pytest-html/)
 
 
 ## Man
+To start server just run:
+
+**python3 server.py**
+
+or import and use Server class in your program.
+
+To use Client import and use Client class in your program.
+
 To start full testing just type in the console:
 
-**pytest test_client.py**
+**pytest test.py**
 
-**pytest test_server.py**
+You may add necessary pytest keys and params. For example, to run only one test class:
 
-You may add necessary pytest keys. For example...
+**pytest test.py::TestServer** or **pytest test.py::TestClient**
 
-...to see all process in console use the pytest key "-s":
+...to see all output in console use the pytest key "-s":
 
-**pytest -s test_client.py**
-
-**pytest -s test_server.py**
+**pytest -s test.py**
 
 ...to see full pytest report in console use the pytest-key "-v":
 
-**pytest -v test_client.py**
-
-**pytest -v test_server.py**
+**pytest -v test.py**
 
 ...to start test only for get or put requests add pytest-key "-k" with string "get" or "put":
 
-**pytest -k "get" test_client.py**
+**pytest -k "server_fn" test.py** (recommends)
 
-**pytest -k "server_fn" test_server.py** (recommends)
+... to generate report in html-file (need install pytest-html plugin before):
 
-**pytest -k "connection" test_server.py** (you need start terminals before. just run **python server.py**)
-
+**pytest --html=report_filename.html**
